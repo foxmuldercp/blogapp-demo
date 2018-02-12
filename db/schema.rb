@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130210557) do
+ActiveRecord::Schema.define(version: 20180212002340) do
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "token"
+    t.integer "user_id"
+    t.string "agent", default: ""
+    t.datetime "expire"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expire"], name: "index_sessions_on_expire"
+    t.index ["token"], name: "index_sessions_on_token"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
