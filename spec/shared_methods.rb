@@ -12,14 +12,15 @@ RSpec.configure do |rspec|
 end
 
 RSpec.shared_context "shared methods", :shared_context => :metadata do
-#  before { @some_var = :some_value }
-  let(:valid_attributes) { {email: 'test@example.com', password: 'aqua', password_confirmation: 'aqua' } }
+  before {
+    @valid_user = { email: 'test@example.com', password: 'aqua', password_confirmation: 'aqua' }
+    @valid_session = ''
+  }
 
   def sign_in
-#    User.create! valid_attributes
-    post :login, params: {user: valid_attributes}
-#    binding.pry
-    JSON.parse(@response.body)['token']
+    User.create! @valid_user
+    post :login, params: {user: @valid_user}
+    @valid_session = JSON.parse(@response.body)['token']
   end
 end
 
