@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   scope 'api' do
-    resources :posts
+    resources :posts do
+      resources :comments
+    end
     resources :categories
     resources :users do
       collection do
