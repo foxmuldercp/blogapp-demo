@@ -8,8 +8,12 @@ class ApplicationController < ActionController::API
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
       return
     end
-    Session.find_by(user: auth_token['id'], token: http_token).touch
     @current_user = User.find(auth_token['id'])
+    if (Session.find_by(user: @current_user, agent: request.user_agent, token: http_token).present?)
+      Session.find_by(user: @current_user, agent: request.user_agent, token: http_token).touch
+    else
+      Session.create(user: @current_user, agent: request.user_agent, token: http_token)
+    end
     rescue JWT::VerificationError, JWT::DecodeError
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end

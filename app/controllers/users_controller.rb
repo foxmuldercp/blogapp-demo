@@ -45,7 +45,11 @@ class UsersController < ApplicationController
     user = User.find_by(email: user_params[:email]).try(:authenticate, user_params[:password])
     return head :unauthorized unless user.present?
     token = JsonWebToken.encode(user.slice(:id, :name, :email))
-    Session.create(user: user, agent: request.user_agent, token: token)
+    if (Session.find_by(user: user, agent: request.user_agent, token: token).present?)
+      Session.find_by(user: user, agent: request.user_agent, token: token).touch
+    else
+      Session.create(user: user, agent: request.user_agent, token: token)
+    end
     render json: {token: token}
   end
 
