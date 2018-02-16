@@ -4,5 +4,5 @@ class CommentSerializer < ActiveModel::Serializer
 
   belongs_to :post
 
-  attributes :id, :author, :content, :url, :api_path
+  attributes :id, :author, :content, :url, :api_path, :created_at
 end
