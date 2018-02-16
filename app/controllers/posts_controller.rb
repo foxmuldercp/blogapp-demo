@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user = @current_user
     if @post.save
-      render json: @post, status: :created, location: @post
+      render json: @post
     else
       render json: @post.errors, status: :unprocessable_entity
     end
