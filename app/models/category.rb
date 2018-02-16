@@ -11,4 +11,12 @@ class Category < ApplicationRecord
     self.name.capitalize!
   end
 
+  def url
+    category_path(self).remove('/api')
+  end
+
+  def api_path
+    category_path(self)
+  end
+
 end

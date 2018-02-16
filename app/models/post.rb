@@ -8,4 +8,12 @@ class Post < ApplicationRecord
   validates :file, file_size: { less_than: 2.megabytes }
   validates_format_of :name, :with => /\A([A-Za-z]{2,})\ ([A-Za-z]{2,})/i
 
+  def url
+    post_path(self).remove('/api')
+  end
+
+  def api_path
+    post_path(self)
+  end
+
 end
