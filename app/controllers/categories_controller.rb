@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
 
-  before_action :set_category, only: [:show, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_category, only: [:show, :update, :posts, :destroy]
+  before_action :authenticate_user!, except: [:index, :posts, :show]
 
   # GET /categories
   def index
@@ -13,6 +13,11 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   def show
     render json: @category
+  end
+
+  def posts
+    @posts = @category.posts.all
+    render json: @posts
   end
 
   # POST /categories

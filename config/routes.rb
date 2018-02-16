@@ -1,11 +1,21 @@
 Rails.application.routes.draw do
 
   scope 'api' do
+
     resources :posts do
       resources :comments
     end
-    resources :categories
+
+    resources :categories do
+      member do
+        get  'posts'
+      end
+    end
+
     resources :users do
+      member do
+        get  'posts'
+      end
       collection do
         post 'login'
       end
