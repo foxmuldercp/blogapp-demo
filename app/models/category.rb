@@ -3,7 +3,7 @@ class Category < ApplicationRecord
   has_many :posts, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
-  validates_format_of :name, :with => /\A([A-Za-z]{2,})\ ([A-Za-z]{2,})/i
+  validates_format_of :name, :with => /\A([A-Za-z0-9]{2,})\ ([A-Za-z0-9]{2,})/i
 
   before_save :capitalize_name
 
